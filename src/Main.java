@@ -13,6 +13,7 @@ public class Main {
     public static UI ui;
 
     public static void main(String[] args) {
+        new GUI();
 
         startOrContinueGame();
         printWelcomeToPlayers();
