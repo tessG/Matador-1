@@ -6,7 +6,7 @@ public class Player {
     private int id;
     static int counter = 0;
 
-    public Player(String name, float balance) {
+    public Player(String name, int balance) {
         this.name = name;
         this.id = counter;
         this.bankAccount = new BankAccount(balance);
@@ -17,7 +17,7 @@ public class Player {
     public String toString() {
         return String.format("Player %d:\n" +
                              "\tName:\t\t%s\n" +
-                             "\tBalance:\t%.2f\n",
+                             "\tBalance:\t%d\n",
                              id, name, bankAccount.getBalance());
     }
 

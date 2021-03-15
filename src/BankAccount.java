@@ -1,24 +1,28 @@
 public class BankAccount {
-    private float balance;
+    private int balance;
 
-    public BankAccount (float balance) {
+    public BankAccount (int balance) {
         this.balance = balance;
     }
 
-    public float withdrawAmount(float amount) {
+    public int withdrawAmount(int amount) {
         this.balance -= amount;
         return amount;
     }
 
-    public void depositAmount(float amount) {
+    public void payAmountToBank(int amount) {
+        this.balance -= amount;
+    }
+
+    public void depositAmount(int amount) {
         this.balance += amount;
     }
 
-    public float getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(float balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 }

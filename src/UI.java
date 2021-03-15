@@ -20,7 +20,7 @@ public class UI {
             if (playerName.toLowerCase().equals("q")) {
                 break;
             }
-            players.add(new Player(playerName, 30000f));
+            players.add(new Player(playerName, 30000));
             count++;
         }
 
@@ -35,9 +35,8 @@ public class UI {
      * @return String
      */
     public String getUserInput(String msg){
-        System.out.println(msg);
+        System.out.print(msg);
         Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine();
-        return input;
+        return scan.nextLine();
     }
 }
