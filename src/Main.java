@@ -11,11 +11,14 @@ import java.util.Scanner;
 public class Main {
     public static ArrayList<Player> players;
     public static UI ui;
+    public static Board board;
 
     public static void main(String[] args) {
 
         startOrContinueGame();
         printWelcomeToPlayers();
+
+        board = new Board();
 
         runGameLoop();
     }
@@ -171,7 +174,7 @@ public class Main {
 
             if (i != 0 && i != lastIndex) {
                 System.out.printf(", %s", name);
-            } else if (i == lastIndex) {
+            } else if (i == lastIndex && i != 0) {
                 System.out.printf(" and %s.", name);
                 return;
             } else {
