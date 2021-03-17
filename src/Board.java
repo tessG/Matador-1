@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Board {
 
     static Field[] fields = new Field[40];
@@ -54,14 +58,19 @@ public class Board {
 
     private static String[] loadConfig() {
         String[] config = new String[6]; // Actually 40, actually from a file
+        File configFile = new File("config.csv");
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(configFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        //          id, type, label, cost, income
-        config[0] = "1, Start, Start, 0, 30000";
-        config[1] = "2, Land, Rødovrevej, 1200, 100";
-        config[2] = "3, Event, Prøv Lykken, 0, 0";
-        config[3] = "4, Land, Hvidovrevej, 1200, 100";
-        config[4] = "5, Tax, Skat, 4000, 0";
-        config[5] = "6, ShippingLine, Limfjorden A/S, 4000, 1000";
+        int i = 0;
+        while (scanner.hasNextLine()) {
+            config[i] = scanner.nextLine();
+            i++;
+        }
 
         return config;
     }

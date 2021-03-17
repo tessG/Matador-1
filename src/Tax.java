@@ -6,4 +6,6 @@ public class Tax extends Consequence {
         super(id, label);
         this.cost = cost;
     }
+
+
 }

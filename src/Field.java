@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Field {
     int id;
     String label;
@@ -7,4 +11,11 @@ public class Field {
         this.label = label;
         System.out.printf("\n%d: %s", this.id, this.label);
     }
+
+    /**
+     * Instantiate a Field using an ID and config.csv
+     * @param id
+     * @return Field
+     */
+
 }

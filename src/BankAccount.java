@@ -10,6 +10,15 @@ public class BankAccount {
         return amount;
     }
 
+    public void receiveAmount(int amount) {
+        this.balance += amount;
+    }
+
+    public void payPlayer(int amount, Player recipient) {
+        this.balance -= amount;
+        recipient.getBankAccount().receiveAmount(amount);
+    }
+
     public void payAmountToBank(int amount) {
         this.balance -= amount;
     }

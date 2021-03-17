@@ -15,10 +15,17 @@ public class Main {
 
     public static void main(String[] args) {
 
+        deleteSavedGame();
+
         startOrContinueGame();
         printWelcomeToPlayers();
 
         board = new Board();
+
+        int turn = 0;
+        for (int i = 0; i < 15; i++) {
+            turn = getNextTurnNum(turn);
+        }
 
         runGameLoop();
     }
@@ -32,14 +39,36 @@ public class Main {
         boolean exit = false;
 
         while (!exit) {
-            exit = update();
-            draw();
+            exit = update(); // Game logic
+            draw();          // Graphics
+        }
+
+        int currentTurnNum = -1;
+        int shortGame = 4;
+        for (int i = 0; i < shortGame; i++) {
+            currentTurnNum = getNextTurnNum(currentTurnNum);
+            doTurn(currentTurnNum);
         }
 
         // User has chosen to exit the program
         saveGameData();
         dispose();
+    }
 
+    private static void doTurn(int turnNum) {
+        Player currentPlayer = getPlayerByID(turnNum);
+        System.out.printf("\nIt is %s's turn. %s has %d kr.", currentPlayer.getName(),
+                                                              currentPlayer.getName(),
+                                                              currentPlayer.getBankAccount().getBalance());
+    }
+
+    private static int getNextTurnNum(int prevTurn) {
+        int turn = prevTurn;
+        turn++;
+        if (turn > players.size() - 1) {
+            turn = 0;
+        }
+        return turn;
     }
 
     /**
@@ -49,7 +78,7 @@ public class Main {
     private static boolean update() {
         boolean exit = false;
         String input = ui.getUserInput("\nType some input, or \"exit\" to exit: ");
-        if (input.toLowerCase().equals("exit")) {
+        if (input.equalsIgnoreCase("exit")) {
             exit = true;
         }
         // Update the game state here:
@@ -59,7 +88,6 @@ public class Main {
 
     /**
      * Draw the state to the screen.
-     * @return true if program should exit
      */
     private static void draw() {
 
@@ -69,7 +97,7 @@ public class Main {
      * Shut down all relevant resources. Mostly applicable to graphics objects.
      */
     private static void dispose() {
-        System.out.println("Saving and exitting.");
+        System.out.println("\nSaving and exitting.");
         System.exit(0); // Error code 0 == no errors
     }
 
@@ -91,9 +119,7 @@ public class Main {
             e.printStackTrace();
         } finally {
             try {
-                if (writer != null) {
-                    writer.close();
-                }
+                writer.close();
             } catch (NullPointerException | IOException e) {
                 System.out.println("Couldn't close the FileWriter in saveGameData()");
                 e.printStackTrace();
@@ -107,12 +133,10 @@ public class Main {
      */
     public static ArrayList<Player> readGameData() {
         ArrayList<Player> playerList = new ArrayList<Player>();
+        Player.counter = 0; // Just to be safe
 
         File file = new File("data.txt");
         Scanner scanner = null;
-
-        Player.counter = 0; // Just to be safe
-
         try {
             scanner = new Scanner(file);
         } catch (FileNotFoundException e) {
@@ -128,6 +152,22 @@ public class Main {
         }
 
         return playerList;
+    }
+
+    public static void deleteSavedGame() {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter("data.txt");
+            writer.write("");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                writer.close();
+            } catch (NullPointerException | IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static String getGameDataFromSession() {

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Player {
     //  Implementer en Player klasse. Lav dens konstruktor sådan at den tager et navn
     //  og en saldo. Ret de to steder i koden hvor Player bliver instansieret.
@@ -5,6 +7,8 @@ public class Player {
     private BankAccount bankAccount;
     private int id;
     static int counter = 0;
+
+    private ArrayList<Property> properties;
 
     public Player(String name, int balance) {
         this.name = name;
@@ -21,6 +25,7 @@ public class Player {
                              id, name, bankAccount.getBalance());
     }
 
+    /* Getters and setters */
     public String getName() {
         return name;
     }

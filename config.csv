@@ -1,0 +1,6 @@
+1, Start, Start, 0, 30000
+2, Land, Rødovrevej, 1200, 100
+3, Event, Prøv Lykken, 0, 0
+4, Land, Hvidovrevej, 1200, 100
+5, Tax, Skat, 4000, 0
+6, ShippingLine, Limfjorden A/S, 4000, 1000
