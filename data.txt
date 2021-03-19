@@ -1,4 +1,2 @@
-Torsten:30000
-Maja:30000
-Karla:30000
-Karl:30000
+asdasd:30000
+w:30000

@@ -12,10 +12,4 @@ public class Field {
         System.out.printf("\n%d: %s", this.id, this.label);
     }
 
-    /**
-     * Instantiate a Field using an ID and config.csv
-     * @param id
-     * @return Field
-     */
-
 }

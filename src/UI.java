@@ -39,4 +39,112 @@ public class UI {
         Scanner scan = new Scanner(System.in);
         return scan.nextLine();
     }
+
+    public void promptNewGame() {
+        String input = getUserInput("Would you like to start a new game? Y/n: ").trim();
+        if (input.equalsIgnoreCase("y") || input.equals("")) {
+            Main.players = createPlayers();
+        }
+    }
+
+    public void showActionMessage(String msg)
+    {
+        String input = getUserInput(msg + "Tast Y hvis du er indforstået.");
+        while (input.toUpperCase().equals("Y") || input.toUpperCase().equals("N")) {
+
+            if (input.toUpperCase().equals("Y")) {
+                System.out.println("Du har købet landet, tillykke!");
+                break;
+            }
+            if (input.toUpperCase().equals("N")) {
+                System.out.println("Du har ikke købt landet.");
+                break;
+            } else {
+                System.out.println("Dit input giver desværre ingen mening.");
+            }
+        }
+
+        /*
+        //Scenarie beskeder med udgangspunkt i hvilken TYPE felt man lander på
+        // Parametrene i if-cases er en hurtig udgave af at finde ud af hvor vi er.
+        if (config.equals(config[0])) {
+            System.out.println("Du har landet på start!");
+            System.out.println("Du får 4000kr!");
+        }
+        if (config.equals(config[1]))
+        {
+            System.out.println("Du er landet på et stykke land");
+            System.out.println("Vil du købe det?");
+
+            while (input.toUpperCase().equals("y") || input.toUpperCase().equals("n")) {
+                input = getUserInput("tryk 'y' for ja eller 'n' for nej");
+
+                if (input.toUpperCase().equals("Y")) {
+                    System.out.println("Du har købet landet, tillykke!");
+                    break;
+                }
+                if (input.toUpperCase().equals("N")) {
+                    System.out.println("Du har ikke købt landet.");
+                    break;
+                } else {
+                    System.out.println("Dit input giver desværre ingen mening.");
+                }
+            }
+        }
+        if (config.equals(config[2]))
+        {
+            System.out.println("Du er landet på en joker");
+            System.out.println("Du trækker et kort");
+        }
+        if (config.equals(config[3]))
+        {
+            System.out.println("Du er landet på et stykke land");
+            System.out.println("Vil du købe det?");
+
+            while (input.toUpperCase().equals("y") || input.toUpperCase().equals("n")) {
+                input = getUserInput("tryk 'y' for ja eller 'n' for nej");
+
+                if (input.toUpperCase().equals("Y")) {
+                    System.out.println("Du har købet landet, tillykke!");
+                    break;
+                }
+                if (input.toUpperCase().equals("N")) {
+                    System.out.println("Du har ikke købt landet.");
+                    break;
+                } else {
+                    System.out.println("Dit input giver desværre ingen mening.");
+                }
+            }
+        }
+        if (config.equals(config[4]))
+        {
+            System.out.println("Du er landet på SKAT");
+            System.out.println("Du skal betale 4000kr til SKAT");
+        }
+        if (config.equals(config[5]))
+        {
+            System.out.println("Du er landet på en shippingline");
+            System.out.println("Vil du købe det?");
+
+            while (input.toUpperCase().equals("y") || input.toUpperCase().equals("n")) {
+                input = getUserInput("tryk 'y' for ja eller 'n' for nej");
+
+                if (input.toUpperCase().equals("Y")) {
+                    System.out.println("Du har købet landet, tillykke!");
+                    break;
+                }
+                if (input.toUpperCase().equals("N")) {
+                    System.out.println("Du har ikke købt landet.");
+                    break;
+                } else {
+                    System.out.println("Dit input giver desværre ingen mening.");
+                }
+            }
+
+
+        }
+
+         */
+
+    }
 }

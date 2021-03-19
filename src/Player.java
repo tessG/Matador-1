@@ -7,6 +7,7 @@ public class Player {
     private BankAccount bankAccount;
     private int id;
     static int counter = 0;
+    private int position;
 
     private ArrayList<Property> properties;
 
@@ -23,6 +24,23 @@ public class Player {
                              "\tName:\t\t%s\n" +
                              "\tBalance:\t%d\n",
                              id, name, bankAccount.getBalance());
+    }
+
+    public void updatePosition(int diceRoll)
+    {
+
+        this.position += diceRoll;
+
+        if(this.position > 40)
+        {
+            this.position = this.position - 40; //When player position exceeds 40 we pass start.
+        }
+
+    }
+
+    public void doTransaction(int amount)
+    {
+        bankAccount.setBalance(bankAccount.getBalance() + amount);
     }
 
     /* Getters and setters */
@@ -46,4 +64,7 @@ public class Player {
         return id;
     }
 
+    public int getPosition() {
+        return position;
+    }
 }

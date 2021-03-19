@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
+// Billede af matador: https://i.ebayimg.com/images/g/rXMAAOSwtVde57gz/s-l1600.jpg
 public class Main {
     public static ArrayList<Player> players;
     public static UI ui;
@@ -15,17 +16,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        deleteSavedGame();
+        // deleteSavedGame();
 
         startOrContinueGame();
         printWelcomeToPlayers();
 
         board = new Board();
-
-        int turn = 0;
-        for (int i = 0; i < 15; i++) {
-            turn = getNextTurnNum(turn);
-        }
 
         runGameLoop();
     }
@@ -43,32 +39,19 @@ public class Main {
             draw();          // Graphics
         }
 
-        int currentTurnNum = -1;
-        int shortGame = 4;
-        for (int i = 0; i < shortGame; i++) {
-            currentTurnNum = getNextTurnNum(currentTurnNum);
-            doTurn(currentTurnNum);
-        }
-
         // User has chosen to exit the program
         saveGameData();
         dispose();
     }
 
-    private static void doTurn(int turnNum) {
-        Player currentPlayer = getPlayerByID(turnNum);
-        System.out.printf("\nIt is %s's turn. %s has %d kr.", currentPlayer.getName(),
-                                                              currentPlayer.getName(),
-                                                              currentPlayer.getBankAccount().getBalance());
-    }
-
-    private static int getNextTurnNum(int prevTurn) {
-        int turn = prevTurn;
-        turn++;
-        if (turn > players.size() - 1) {
-            turn = 0;
-        }
-        return turn;
+    private static void doTurn(int playerID) {
+        Dice dice = new Dice();
+        Player player = players.get(playerID);
+        player.updatePosition(dice.throwDice());
+        Start start = (Start)board.getField(player.getPosition());
+        Action action = start.getAction();
+        ui.showActionMessage(action.getMsg());
+        player.doTransaction(action.getAmount());
     }
 
     /**
@@ -106,6 +89,8 @@ public class Main {
         players = readGameData();
         if (players.size() == 0) {
             players = ui.createPlayers();
+        } else {
+            ui.promptNewGame();
         }
     }
 
