@@ -1,10 +1,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Board {
 
     static Field[] fields = new Field[40];
+    CardDeck unusedCards;
+    CardDeck discardedCards = new CardDeck();
 
     /**
      * Config data bør læses fra en fil, fx csv med flg. (eller lign.) format
@@ -19,6 +22,7 @@ public class Board {
      */
     public Board() {
         setFields();
+        unusedCards = new CardDeck("cards.csv");
     }
 
     /**
@@ -26,7 +30,7 @@ public class Board {
      * for each line in that file.
      */
     private static void setFields() {
-        String[] config = loadConfig();
+        String[] config = Util.loadCsv("config.csv");
         for (int i = 0; i < config.length; i++) {
             String[] fieldData = config[i].split(",");
             int id = Integer.parseInt(fieldData[0].trim());
@@ -69,23 +73,4 @@ public class Board {
 
         return null;
     }
-
-        private static String[] loadConfig() {
-            String[] config = new String[40]; // Actually 40, actually from a file
-            File configFile = new File("config.csv");
-            Scanner scanner = null;
-            try {
-                scanner = new Scanner(configFile);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            int i = 0;
-            while (scanner.hasNextLine()) {
-                config[i] = scanner.nextLine();
-                i++;
-            }
-
-            return config;
-        }
-    }
+}

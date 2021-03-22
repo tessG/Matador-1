@@ -50,13 +50,13 @@ public class UI {
     public void showActionMessage(String msg)
     {
         String input = getUserInput(msg + "Tast Y hvis du er indforstået.");
-        while (input.toUpperCase().equals("Y") || input.toUpperCase().equals("N")) {
+        while (input.equalsIgnoreCase("Y") || input.toUpperCase().equals("N")) {
 
-            if (input.toUpperCase().equals("Y")) {
+            if (input.equalsIgnoreCase("Y")) {
                 System.out.println("Du har købet landet, tillykke!");
                 break;
             }
-            if (input.toUpperCase().equals("N")) {
+            if (input.equalsIgnoreCase("N")) {
                 System.out.println("Du har ikke købt landet.");
                 break;
             } else {

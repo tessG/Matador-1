@@ -3,10 +3,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 // Billede af matador: https://i.ebayimg.com/images/g/rXMAAOSwtVde57gz/s-l1600.jpg
 public class Main {
@@ -34,6 +32,8 @@ public class Main {
     private static void runGameLoop() {
         boolean exit = false;
 
+        doTurn(0);
+
         while (!exit) {
             exit = update(); // Game logic
             draw();          // Graphics
@@ -48,10 +48,26 @@ public class Main {
         Dice dice = new Dice();
         Player player = players.get(playerID);
         player.updatePosition(dice.throwDice());
-        Start start = (Start)board.getField(player.getPosition());
+        /*
+        Start start = (Start)board.getField(player.getPosition()); // test
         Action action = start.getAction();
+
+
         ui.showActionMessage(action.getMsg());
         player.doTransaction(action.getAmount());
+
+         */
+
+
+
+
+    }
+
+    private static Field downcast(Field f) {
+        if (f instanceof Start) {
+            return (Start)f;
+        }
+        return null;
     }
 
     /**

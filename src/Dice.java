@@ -11,7 +11,7 @@ public class Dice {
         d2 = r.nextInt(6 - 1) + 1;
         // d1 = 1;
         // d2 = 1;
-        System.out.println(d1 + d2);
+        // System.out.println(d1 + d2);
         return d1 + d2;
     }
 
