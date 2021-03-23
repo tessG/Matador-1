@@ -13,14 +13,4 @@ public class Card {
     public String toString() {
         return text;
     }
-
-    /*
-    public String draw() {
-        int MAX = 100;
-        counter++;
-        return cardPile[counter];
-    }
-
-     */
-
 }

@@ -37,7 +37,31 @@ public class Util {
         System.out.println();
     }
 
-    public static String[] loadCsv(String path) {
+    public static String[] readCsv(String path) {
+        // A csv has n commas and n+1 values
+        String[] textArr = readFile(path);
+        StringBuilder textStr = new StringBuilder();
+        for (String s : textArr) {
+            textStr.append(s);
+        }
+
+        int numValues = occurrencesOf(',', textStr.toString()) + 1;
+        String[] csv = new String[numValues];
+        csv = textStr.toString().split(",");
+        return csv;
+    }
+
+    public static int occurrencesOf(char c, String s) {
+        int numOccurrences = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == c) {
+                numOccurrences++;
+            }
+        }
+        return numOccurrences;
+    }
+
+    public static String[] readFile(String path) {
         String[] contents = new String[1];
         File file = new File(path);
         Scanner scanner;
@@ -57,5 +81,16 @@ public class Util {
             e.printStackTrace();
         }
         return contents;
+    }
+
+    /**
+     * Shift subscripts of an array one index to the right.
+     */
+    public static void shiftArray(Object[] array) {
+        Object temp = array[0];
+        for (int i = 0; i < array.length - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        array[array.length - 1] = temp;
     }
 }

@@ -1,13 +1,7 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Scanner;
-
 public class Board {
 
     static Field[] fields = new Field[40];
-    CardDeck unusedCards;
-    CardDeck discardedCards = new CardDeck();
+    CardDeck actionCards;
 
     /**
      * Config data bør læses fra en fil, fx csv med flg. (eller lign.) format
@@ -22,7 +16,8 @@ public class Board {
      */
     public Board() {
         setFields();
-        unusedCards = new CardDeck("cards.csv");
+        String[] csv = Util.readCsv("cards.csv");
+        actionCards = new CardDeck("cards.csv"); // Lykkekort
     }
 
     /**
@@ -30,7 +25,7 @@ public class Board {
      * for each line in that file.
      */
     private static void setFields() {
-        String[] config = Util.loadCsv("config.csv");
+        String[] config = Util.readFile("config.csv");
         for (int i = 0; i < config.length; i++) {
             String[] fieldData = config[i].split(",");
             int id = Integer.parseInt(fieldData[0].trim());

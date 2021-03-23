@@ -58,16 +58,26 @@ public class Main {
 
          */
 
+        // Test action cards:
+        System.out.println("Player 0 has " + players.get(0).getActionCards().size() + " cards.");
+        System.out.println("There are " + board.actionCards.numCards() + " in the deck.");
+        System.out.println("They are:\n");
+        System.out.println(board.actionCards);
+        players.get(0).addActionCard(board.actionCards.drawCard());
 
+        System.out.println("Player 0 draws a card.");
+        System.out.println("Player 0 now has " + players.get(0).getActionCards().size() + " card.");
+        System.out.println("There are " + board.actionCards.numCards() + " in the deck.");
+        System.out.println("They are:\n");
+        System.out.println(board.actionCards);
 
-
-    }
-
-    private static Field downcast(Field f) {
-        if (f instanceof Start) {
-            return (Start)f;
-        }
-        return null;
+        System.out.println("Player 0 puts their card back in the bottom of the deck.");
+        board.actionCards.putCardInBottomOfDeck(players.get(0).getActionCards().get(0));
+        players.get(0).getActionCards().remove(0);
+        System.out.println("Player 0 has " + players.get(0).getActionCards().size() + " cards again.");
+        System.out.println("There are " + board.actionCards.numCards() + " in the deck.");
+        System.out.println("They are:\n");
+        System.out.println(board.actionCards);
     }
 
     /**
@@ -222,5 +232,6 @@ public class Main {
                 System.out.printf("\nWelcome, %s", name);
             }
         }
+        System.out.println();
     }
 }

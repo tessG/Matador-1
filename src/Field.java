@@ -9,7 +9,6 @@ public class Field {
     public Field(int id, String label) {
         this.id = id;
         this.label = label;
-        System.out.printf("%d: %s\n", this.id, this.label);
     }
 
 }

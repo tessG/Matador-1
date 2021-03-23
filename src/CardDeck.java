@@ -1,11 +1,9 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class CardDeck {
 
-    int TEMP_MAX = 3;
-    Card[] cards;
+    private int TEMP_MAX = 6;
+    private Card[] cards;
 
     public CardDeck() {
         cards = new Card[TEMP_MAX];
@@ -19,9 +17,22 @@ public class CardDeck {
         shuffle();
     }
 
+    public Card drawCard() {
+        Card card = cards[0];
+        cards[0] = null;
+        Util.shiftArray(cards);
+        cards = Arrays.copyOf(cards, cards.length - 1);
+        return card;
+    }
+
+    public void putCardInBottomOfDeck(Card card) {
+        cards = Arrays.copyOf(cards, cards.length + 1);
+        cards[cards.length - 1] = card;
+    }
+
     public Card[] loadCardsFromCsv(String path) {
         Card[] cards = new Card[TEMP_MAX];
-        String[] cardStrings = Util.loadCsv(path);
+        String[] cardStrings = Util.readCsv(path);
         for (int i = 0; i < cardStrings.length; i++) {
             cards[i] = new Card(cardStrings[i]);
         }
@@ -44,5 +55,9 @@ public class CardDeck {
             s.append(c).append("\n");
         }
         return s.toString();
+    }
+
+    public int numCards() {
+        return cards.length;
     }
 }

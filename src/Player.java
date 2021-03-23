@@ -1,15 +1,14 @@
 import java.util.ArrayList;
 
 public class Player {
-    //  Implementer en Player klasse. Lav dens konstruktor sådan at den tager et navn
-    //  og en saldo. Ret de to steder i koden hvor Player bliver instansieret.
     private String name;
     private BankAccount bankAccount;
     private int id;
     static int counter = 0;
     private int position;
 
-    private ArrayList<Property> properties;
+    private ArrayList<Property> properties = new ArrayList<>();
+    private ArrayList<Card> actionCards = new ArrayList<>(); // Lykkekort
 
     public Player(String name, int balance) {
         this.name = name;
@@ -28,9 +27,7 @@ public class Player {
 
     public void updatePosition(int diceRoll)
     {
-
         this.position += diceRoll;
-
         if(this.position > 40)
         {
             this.position = this.position - 40; //When player position exceeds 40 we pass start.
@@ -66,5 +63,13 @@ public class Player {
 
     public int getPosition() {
         return position;
+    }
+
+    public ArrayList<Card> getActionCards() {
+        return actionCards;
+    }
+
+    public void addActionCard(Card card) {
+        this.actionCards.add(card);
     }
 }
