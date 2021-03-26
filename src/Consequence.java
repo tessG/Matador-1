@@ -4,5 +4,10 @@ public class Consequence extends Field {
         super(id, label);
     }
 
+    @Override
+    public Action getAction() {
+        return null;
+    }
+
 
 }

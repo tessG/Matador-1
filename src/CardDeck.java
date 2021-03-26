@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class CardDeck {
 
-    private int TEMP_MAX = 6;
+    private int TEMP_MAX = 6; // This should be automatic
     private Card[] cards;
 
     public CardDeck() {

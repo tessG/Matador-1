@@ -1,14 +1,19 @@
 import java.util.ArrayList;
 
 public class Player {
-    private String name;
-    private BankAccount bankAccount;
-    private int id;
-    static int counter = 0;
-    private int position;
+    //  Implementer en Player klasse. Lav dens konstruktor sådan at den tager et navn
+    //  og en saldo. Ret de to steder i koden hvor Player bliver instansieret.
 
-    private ArrayList<Property> properties = new ArrayList<>();
-    private ArrayList<Card> actionCards = new ArrayList<>(); // Lykkekort
+    private String name;                            // Player name
+    private BankAccount bankAccount;                // players Bankaccount
+
+    private int id;                                 // Players unique id
+    static int counter = 0;                         // Used for unique ID's to players
+    private int position;                           // Players current position on board (field)
+    private int passStartMoney = 4000;              // Money given when a player passes start field
+    private int landOnStartMoney = 4000;            // Money given if a player lands on start field
+
+    private ArrayList<Property> properties;
 
     public Player(String name, int balance) {
         this.name = name;
@@ -17,34 +22,10 @@ public class Player {
         counter++;
     }
 
-    @Override
-    public String toString() {
-        return String.format("Player %d:\n" +
-                             "\tName:\t\t%s\n" +
-                             "\tBalance:\t%d\n",
-                             id, name, bankAccount.getBalance());
-    }
-
-    public void updatePosition(int diceRoll)
-    {
-        this.position += diceRoll;
-        if(this.position > 40)
-        {
-            this.position = this.position - 40; //When player position exceeds 40 we pass start.
-        }
-
-    }
-
-    public void doTransaction(int amount)
-    {
-        bankAccount.setBalance(bankAccount.getBalance() + amount);
-    }
-
     /* Getters and setters */
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -52,7 +33,6 @@ public class Player {
     public BankAccount getBankAccount() {
         return bankAccount;
     }
-
     public void setBankAccount(BankAccount bankAccount) {
         this.bankAccount = bankAccount;
     }
@@ -64,12 +44,77 @@ public class Player {
     public int getPosition() {
         return position;
     }
-
-    public ArrayList<Card> getActionCards() {
-        return actionCards;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
-    public void addActionCard(Card card) {
-        this.actionCards.add(card);
+
+    /* Methods */
+    @Override
+    public String toString() {
+        return String.format("Player %d:\n" +
+                        "\tName:\t\t%s\n" +
+                        "\tBalance:\t%d\n",
+                id, name, bankAccount.getBalance());
+    }
+
+    /* Update player position by adding a dice roll to players current position */
+    public int updatePosition(int diceRoll) {
+        this.position += diceRoll;
+
+        //When player position exceeds 40 we pass start.
+        if(this.position > 40)
+        {
+            this.position = this.position - 40;
+            getMoneyFromBank(passStartMoney);
+
+            // Player has landed on start field
+            if (this.position == 1) {
+                getMoneyFromBank(landOnStartMoney);
+            }
+        }
+        return this.position;
+    }
+
+    public void doTransaction(Player recipient, int amount) {
+        // Negative amount: You lose money
+        if (recipient == null) {
+            if (amount < 0) {
+                giveMoneyToBank(amount);
+            } else {
+                getMoneyFromBank(amount);
+            }
+        } else {
+            doPlayerTransaction(recipient, amount);
+        }
+    }
+
+    // Take money from current player and give to another player specified in parameter
+    public void doPlayerTransaction(Player playerToPay, int amount) {
+        if (playerHasEnoughMoney(amount)) {
+            bankAccount.setBalance(bankAccount.getBalance() - amount);
+            playerToPay.bankAccount.setBalance(bankAccount.getBalance() + amount);
+        }
+    }
+
+    // Get money from bank
+    public void getMoneyFromBank(int amount) {
+        bankAccount.setBalance(bankAccount.getBalance() + amount);
+    }
+
+    // Give money to bank
+    public void giveMoneyToBank(int amount) {
+        if (playerHasEnoughMoney(amount)) {
+            bankAccount.setBalance(bankAccount.getBalance() - amount);
+        }
+    }
+
+    // Check if player has enough money on their account for the transaction with given amount
+    public boolean playerHasEnoughMoney(int amount) {
+        if (bankAccount.getBalance() - amount < 0) {
+            System.out.println("Player does not have enough money");
+            return false;
+        }
+        return true;
     }
 }

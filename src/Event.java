@@ -8,6 +8,7 @@ public class Event extends Consequence {
         return "Træk et kort fra bunken";
     }
 
+    @Override
     public Action getAction(){
         String str = this.toString();
         Action a = new Action(str);

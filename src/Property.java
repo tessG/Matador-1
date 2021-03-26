@@ -1,6 +1,7 @@
 public class Property extends Field implements Purchasable {
 
     int cost, income;
+    Player owner;
 
     public Property(int id, String label, int cost, int income) {
         super(id, label);
@@ -21,6 +22,10 @@ public class Property extends Field implements Purchasable {
         return a;
     }
 
+    public void updateOwnership(Player owner) {
+        this.owner = owner;
+    }
+
     @Override
     public void purchase() {
 
@@ -37,4 +42,5 @@ public class Property extends Field implements Purchasable {
     public int getIncome() {
         return income;
     }
+
 }

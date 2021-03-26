@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class UI {
@@ -27,6 +26,51 @@ public class UI {
         return players;
     }
 
+    /*
+     *
+     * There was no saved data on boot, so system shows the message “write name of participant 1”.
+     * The user writes a name and presses enter.
+     * The system creates a new BankAccount with the initial balance of 30000, creates a Player with the name.
+     * Then assigns the Account  to the Player.
+     * The System shows the message “write name of participant 2”, and the circle continues until there are 6 players.
+     *
+     * */
+    private int maxPlayers = 6;
+    private int startBalance = 30000;
+
+    public void registerPlayers(){
+        String input="";
+        System.out.println("Skriv navnene på spillets deltagere");
+        System.out.println("tast Q for quitte");
+        while(Main.players.size() < maxPlayers ){ //Tjekker om brugeren har tastet Q eller om der er registret 6 spillere
+            input = getUserInput("Skriv navnet på spiller nr "+(Main.players.size()+1));
+
+            if(input.toUpperCase().equals("Q")) {
+                break;
+            }else{
+                Player player = new Player(input, startBalance);
+                Main.players.add(player);
+            }
+
+        }
+        System.out.println("Tak, spillets deltagere er registeret");
+    }
+
+    public void showActionMessage(String msg) {
+        String input = getUserInput(msg);
+        while (input.toUpperCase().equals("Y") || input.toUpperCase().equals("N")) {
+            if (input.toUpperCase().equals("Y")) {
+                // System.out.println("Du har købet landet, tillykke!");
+                break;
+            }
+            if (input.toUpperCase().equals("N")) {
+                // System.out.println("Du har ikke købt landet.");
+                break;
+            } else {
+                System.out.println("Dit input giver desværre ingen mening.");
+            }
+        }
+    }
 
     /**
      * Give a message in System.out.
@@ -46,23 +90,6 @@ public class UI {
             Main.players = createPlayers();
         }
     }
-
-    public void showActionMessage(String msg)
-    {
-        String input = getUserInput(msg + "Tast Y hvis du er indforstået.");
-        while (input.equalsIgnoreCase("Y") || input.toUpperCase().equals("N")) {
-
-            if (input.equalsIgnoreCase("Y")) {
-                System.out.println("Du har købet landet, tillykke!");
-                break;
-            }
-            if (input.equalsIgnoreCase("N")) {
-                System.out.println("Du har ikke købt landet.");
-                break;
-            } else {
-                System.out.println("Dit input giver desværre ingen mening.");
-            }
-        }
 
         /*
         //Scenarie beskeder med udgangspunkt i hvilken TYPE felt man lander på
@@ -147,4 +174,5 @@ public class UI {
          */
 
     }
-}
+
+

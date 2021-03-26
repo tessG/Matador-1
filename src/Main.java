@@ -11,6 +11,7 @@ public class Main {
     public static ArrayList<Player> players;
     public static UI ui;
     public static Board board;
+    public static Player currentPlayer;
 
     public static void main(String[] args) {
 
@@ -32,7 +33,7 @@ public class Main {
     private static void runGameLoop() {
         boolean exit = false;
 
-        doTurn(0);
+        doTurn(players.get(0));
 
         while (!exit) {
             exit = update(); // Game logic
@@ -44,40 +45,60 @@ public class Main {
         dispose();
     }
 
-    private static void doTurn(int playerID) {
+    private static void doTurn2(int playerID) {
+        currentPlayer = players.get(0);
         Dice dice = new Dice();
         Player player = players.get(playerID);
         player.updatePosition(dice.throwDice());
-        /*
         Start start = (Start)board.getField(player.getPosition()); // test
         Action action = start.getAction();
 
-
         ui.showActionMessage(action.getMsg());
-        player.doTransaction(action.getAmount());
+        player.doTransaction(null, action.getAmount());
+    }
 
-         */
+    public static void doTurn(Player player){
+        Dice d = new Dice();
+        int sum = d.throwDice();
 
-        // Test action cards:
-        System.out.println("Player 0 has " + players.get(0).getActionCards().size() + " cards.");
-        System.out.println("There are " + board.actionCards.numCards() + " in the deck.");
-        System.out.println("They are:\n");
-        System.out.println(board.actionCards);
-        players.get(0).addActionCard(board.actionCards.drawCard());
+        // int currentPosition = player.updatePosition(sum);
+        int currentPosition = 2;
 
-        System.out.println("Player 0 draws a card.");
-        System.out.println("Player 0 now has " + players.get(0).getActionCards().size() + " card.");
-        System.out.println("There are " + board.actionCards.numCards() + " in the deck.");
-        System.out.println("They are:\n");
-        System.out.println(board.actionCards);
 
-        System.out.println("Player 0 puts their card back in the bottom of the deck.");
-        board.actionCards.putCardInBottomOfDeck(players.get(0).getActionCards().get(0));
-        players.get(0).getActionCards().remove(0);
-        System.out.println("Player 0 has " + players.get(0).getActionCards().size() + " cards again.");
-        System.out.println("There are " + board.actionCards.numCards() + " in the deck.");
-        System.out.println("They are:\n");
-        System.out.println(board.actionCards);
+        Field f = board.getField(currentPosition);
+        Action a = f.getAction();
+        ui.showActionMessage(a.getMsg());
+
+        // Der er blevet sagt ja til at købe grunden
+
+
+        // Test case
+        Property fp = (Property)f;
+        fp.updateOwnership(currentPlayer);
+        // Action a = null;
+        Player anotherPlayer = new Player("TestPlayer", 30000);
+        a = f.getAction();
+        ui.showActionMessage(a.getMsg());
+
+        // </test>
+
+
+        /*
+        if(f instanceof Start) {
+            Start sf = (Start)f;
+            a = sf.getAction();
+        }else if (f instanceof Land){
+            Land lf = (Land)f;
+            a = lf.getAction();
+        } else if (f instanceof Event) {
+            Event ef = (Event)f;
+            a = ef.getAction();
+        }
+        */
+        System.out.println(f.label);
+
+        // ui.showActionMessage(a.msg);
+        // player.doTransaction(a.amount);
     }
 
     /**

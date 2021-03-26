@@ -1,8 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
-public class Field {
+public abstract class Field {
     int id;
     String label;
 
@@ -10,5 +6,7 @@ public class Field {
         this.id = id;
         this.label = label;
     }
+
+    public abstract Action getAction();
 
 }
